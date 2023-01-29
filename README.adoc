@@ -1,0 +1,56 @@
+= Unofficial Firefox Developer Edition Flatpak
+
+CAUTION: *Still In development*
+
+This is an attempt to put together the developer edition flatpak based on Mozilla's workflow build.
+
+
+== Build, Install and Run Flatpak (Locally)
+
+Dependencies: `flatpak`, `flatpak-builder`, `git`
+
+=== Install
+[source, shell]
+----
+git clone --recurse-submodules github
+cd org.mozilla.firefox-dev
+----
+[source, shell]
+----
+flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
+----
+
+=== Build
+[source, shell]
+----
+flatpak-builder build --force-clean --install-deps-from=flathub --install --user org.mozilla.firefox-dev
+----
+
+=== Run
+[source, shell]
+----
+flatpak run --user org.mozilla.firefox-dev
+----
+
+=== Uninstall
+[source, shell]
+----
+flatpak uninstall --delete-data --user org.mozilla.firefox-dev
+----
+
+=== Clean up everything
+[source, shell]
+----
+rm --force --recursive .flatpak-builder/ build/
+flatpak uninstall --unused --user
+flatpak remote-delete --user flathub
+----
+
+== References
+
+- Main Source: https://hg.mozilla.org/mozilla-central/file/tip/taskcluster/docker/firefox-flatpak[Mozilla-central/ taskcluster]
+designed to build the official firefox flatpak in a CICD workflow.
+
+- https://github.com/mozilla-partners/flatpak.git[mozilla-partners/flatpak].
+
+- https://github.com/flathub/org.mozilla.firefox.BaseApp.git[flathub/org.mozilla.firefox.BaseApp]
