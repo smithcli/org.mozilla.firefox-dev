@@ -37,6 +37,7 @@ finish-args:
   - --own-name="org.mozilla.firefox_beta.*"
   # ?
   - --require-version=0.11.1
+
 modules:
   - shared-modules/dbus-glib/dbus-glib.json
 
@@ -97,12 +98,27 @@ modules:
   - name: firefox-dev
     buildsystem: simple
     build-commands:
+      #- install -d /app/lib
+      #- tar --directory=/app/lib -jxf firefox-dev.tar.bz2
       - install -D --mode=0644 --target-directory=/app/share/applications org.mozilla.firefox-dev.desktop
-      - install -D --mode=0644 --target-directory=/app/share/appdata/ org.mozilla.firefox-dev.appdata.xml
+      - install -D --mode=0644 --target-directory=/app/share/appdata org.mozilla.firefox-dev.appdata.xml
+      - install -D --mode=0644 --target-directory=/app/lib/firefox/distribution policies.json
+      - install -D --mode=0644 --target-directory=/app/lib/firefox/browser/defaults/preferences default-preferences.js
+        # requires extracted tar
+      #- for size in 16 32 48 64 128;
+      #  do install -D --mode=0644 "/app/lib/firefox/browser/chrome/icons/default/default${size}.png" "/app/share/icons/hicolor/${size}x${size}/apps/org.mozilla.firefox-dev.png";
+      #  done
     sources:
       - type: extra-data
         filename: firefox-dev.tar.bz2
-        only-arches:
-          - x86_64
         sha256: 804fe918058d533226c4c5ddb559dad57e70637be2ef8919eef471f305450943
         url: https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-us
+        size: 80112235
+      - type: file
+        path: org.mozilla.firefox-dev.desktop
+      - type: file
+        path: org.mozilla.firefox-dev.appdata.xml
+      - type: file
+        path: policies.json
+      - type: file
+        path: default-preferences.js

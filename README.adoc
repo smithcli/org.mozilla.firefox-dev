@@ -9,7 +9,7 @@ This is an attempt to put together the developer edition flatpak based on Mozill
 
 Dependencies: `flatpak`, `flatpak-builder`, `git`
 
-=== Install
+=== Build & Install
 [source, shell]
 ----
 git clone --recurse-submodules github
@@ -19,8 +19,7 @@ cd org.mozilla.firefox-dev
 ----
 flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
 ----
-
-=== Build
+===
 [source, shell]
 ----
 flatpak-builder build --force-clean --install-deps-from=flathub --install --user org.mozilla.firefox-dev
